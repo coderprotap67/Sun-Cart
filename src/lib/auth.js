@@ -1,8 +1,8 @@
 import { betterAuth } from "better-auth";
-// আপনার পছন্দমতো অ্যাডাপ্টার ব্যবহার করুন (যেমন Prisma বা MongoDB)
+import { createAuthClient } from "better-auth/react";
 
+// সার্ভার সাইড কনফিগারেশন
 export const auth = betterAuth({
-    // সোশ্যাল লগইন কনফিগারেশন
     socialProviders: {
         google: {
             clientId: process.env.GOOGLE_CLIENT_ID,
@@ -11,8 +11,10 @@ export const auth = betterAuth({
     },
 });
 
-// ক্লায়েন্ট সাইড হুক
-import { createAuthClient } from "better-auth/react";
+// ক্লায়েন্ট সাইড কনফিগারেশন
 export const authClient = createAuthClient({
-    baseURL: process.env.NEXT_PUBLIC_APP_URL // আপনার সাইটের URL
+    baseURL: process.env.NEXT_PUBLIC_APP_URL 
 });
+
+// এই লাইনটি অবশ্যই যোগ করুন, যাতে MyProfile পেজটি useSession খুঁজে পায়
+export const { useSession, signIn, signOut } = authClient;

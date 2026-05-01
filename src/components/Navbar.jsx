@@ -1,42 +1,43 @@
 import Link from "next/link";
 
 export default function Navbar() {
-  // Use your BetterAuth session hook here
-  const user = null; // Replace with session data
+  const user = null;
 
   return (
-    <div className="navbar bg-base-100 px-6 border-b">
-      <div className="flex-1">
-        <Link href="/" className="btn btn-ghost text-xl lowercase">logo text</Link>
+    <div className="navbar bg-[#F3F3F3] px-10 py-4">
+      <div className="navbar-start">
+        <Link href="/" className="text-3xl font-extrabold tracking-tight">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+            Summer Essentials Store
+          </span>
+        </Link>
       </div>
-      <div className="flex-none gap-4">
-        <div className="flex gap-2">
-          <Link href="/" className="btn btn-sm bg-gray-300 hover:bg-gray-400 border-none">Home</Link>
-          <Link href="/android" className="btn btn-sm btn-ghost">Android</Link>
-          <Link href="/my-profile" className="btn btn-sm btn-ghost">My Pro</Link>
+
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1 gap-6 text-gray-600 font-medium">
+          <li><Link href="/">Home</Link></li>
+          <li><Link href="/products">Products</Link></li>
+          <li><Link href="/my-profile">My Profile</Link></li>
+        </ul>
+      </div>
+
+      <div className="navbar-end gap-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full border-2 border-black flex items-center justify-center overflow-hidden bg-white">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+          </div>
+
+          {!user && (
+            <Link 
+              href="/auth/register" // এখানে প্রথমে রেজিস্ট্রেশন পেজে পাঠানো হচ্ছে
+              className="btn btn-neutral rounded-none px-8 bg-[#403F3F] text-white hover:bg-black border-none"
+            >
+              Login
+            </Link>
+          )}
         </div>
-        
-        {user ? (
-          <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img src={user.image} alt="profile" />
-              </div>
-            </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li><a>Logout</a></li>
-            </ul>
-          </div>
-        ) : (
-          <div className="flex items-center gap-2">
-            <div className="avatar placeholder">
-              <div className="bg-neutral text-neutral-content rounded-full w-8">
-                <span className="text-xs">U</span>
-              </div>
-            </div>
-            <Link href="/login" className="btn btn-neutral btn-sm px-6">Log in</Link>
-          </div>
-        )}
       </div>
     </div>
   );
