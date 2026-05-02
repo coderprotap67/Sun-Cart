@@ -3,7 +3,6 @@ import ProductCard from "@/components/ProductCard";
 import products from "@/data/products.json";
 
 export default function Home() {
-  // ১. এখানে স্লাইস ব্যবহার করে শুধু ৩টি জনপ্রিয় প্রোডাক্ট নেওয়া হয়েছে
   const popularProducts = products.slice(0, 3); 
 
   return (
