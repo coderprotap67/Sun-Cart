@@ -3,15 +3,11 @@ import ProductCard from "@/components/ProductCard";
 import products from "@/data/products.json";
 
 export default function Home() {
-  // JSON ডাটা থেকে প্রথম ৩টি প্রোডাক্ট দেখানোর জন্য
   const popularProducts = products.slice(0, 3);
 
   return (
     <div className="container mx-auto px-4 md:px-10 pb-20">
-      {/* ১. Hero Section (ইমেজ অনুযায়ী বড় ব্যানার) */}
       <Hero />
-
-      {/* ২. Popular Products Section (৩টি কার্ডের গ্রিড) */}
       <section className="my-16">
         <div className="flex justify-between items-center mb-10">
           <h2 className="text-4xl font-bold text-gray-800">Popular Products</h2>
@@ -24,8 +20,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* ৩. Extra Section: Summer Care Tips */}
       <section className="bg-yellow-50 rounded-3xl p-8 md:p-12 mb-16 shadow-sm border border-yellow-100">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div>
@@ -52,8 +46,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ৪. Extra Section: Top Brands */}
       <section className="text-center">
         <h2 className="text-2xl font-bold text-gray-400 mb-8 uppercase tracking-widest">Top Brands</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">

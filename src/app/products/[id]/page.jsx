@@ -5,16 +5,12 @@ import { useRouter } from "next/navigation";
 
 export default function ProductDetails({ params }) {
   const router = useRouter();
-  
-  // params কে আনর‍্যাপ করা
   const resolvedParams = use(params);
   const productId = parseInt(resolvedParams.id);
-  
-  // JSON থেকে ডেটা খুঁজে বের করা
   const product = products.find((p) => p.id === productId);
 
   if (!product) {
-    return <div className="text-center p-20 text-2xl">প্রোডাক্ট পাওয়া যায়নি!</div>;
+    return <div className="text-center p-20 text-2xl">products not found!</div>;
   }
 
   return (

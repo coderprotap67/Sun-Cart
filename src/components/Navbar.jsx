@@ -7,14 +7,14 @@ export default function Navbar() {
     <div className="navbar bg-[#F3F3F3] px-10 py-4">
       <div className="navbar-start">
         <Link href="/" className="text-3xl font-extrabold tracking-tight">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-600">
             Summer Essentials Store
           </span>
         </Link>
       </div>
 
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-6 text-gray-600 font-medium">
+        <ul className="menu menu-horizontal px-1 gap-6 text-navy to-blue-400-600 font-medium">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/products">Products</Link></li>
           <li><Link href="/my-profile">My Profile</Link></li>
@@ -31,8 +31,8 @@ export default function Navbar() {
 
           {!user && (
             <Link 
-              href="/auth/register" // এখানে প্রথমে রেজিস্ট্রেশন পেজে পাঠানো হচ্ছে
-              className="btn btn-neutral rounded-none px-8 bg-[#403F3F] text-white hover:bg-black border-none"
+              href="/auth/register" 
+              className="btn btn-neutral rounded-none px-8 bg-gradient-to-r from-blue-400 to-green-600 border-none"
             >
               Login
             </Link>

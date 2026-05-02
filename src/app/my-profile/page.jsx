@@ -7,8 +7,6 @@ import { useEffect } from "react";
 export default function MyProfile() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
-
-  // ইউজার লগইন না থাকলে প্রোফাইল পেজ দেখতে পারবে না
   useEffect(() => {
     if (!isPending && !session) {
       router.push("/login");
@@ -28,7 +26,6 @@ export default function MyProfile() {
   return (
     <div className="container mx-auto px-4 py-20">
       <div className="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-        {/* Header/Cover Background */}
         <div className="h-32 bg-gradient-to-r from-blue-400 to-purple-500"></div>
 
         <div className="px-8 pb-10">
