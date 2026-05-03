@@ -1,10 +1,10 @@
-"use client"; // ক্লায়েন্ট সাইড লজিকের জন্য এটি অবশ্যই লাগবে
+"use client";
 import Link from "next/link";
-import { useSession, signOut } from "@/lib/auth-client"; // auth-client থেকে ইমপোর্ট করুন
+import { useSession, signOut } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const { data: session, isPending } = useSession(); // ইউজারের ডাটা ফেচ করা হচ্ছে
+  const { data: session, isPending } = useSession();
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -40,7 +40,6 @@ export default function Navbar() {
           {isPending ? (
             <span className="loading loading-spinner loading-sm"></span>
           ) : session ? (
-            /* ইউজার লগইন থাকলে তার প্রোফাইল ছবি এবং ড্রপডাউন দেখাবে */
             <div className="dropdown dropdown-end flex items-center gap-3">
               <span className="hidden md:block font-bold text-slate-700">{session.user.name}</span>
               <div tabIndex={0} role="button" className="w-10 h-10 rounded-full border-2 border-blue-400 flex items-center justify-center overflow-hidden bg-white shadow-sm cursor-pointer">
@@ -55,7 +54,6 @@ export default function Navbar() {
               </ul>
             </div>
           ) : (
-            /* ইউজার লগইন না থাকলে লগইন বাটন দেখাবে */
             <>
               <div className="w-10 h-10 rounded-full border-2 border-slate-200 flex items-center justify-center overflow-hidden bg-white shadow-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-slate-600">
