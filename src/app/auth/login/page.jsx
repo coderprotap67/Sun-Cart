@@ -2,36 +2,53 @@
 import { signIn } from "@/lib/auth-client"; 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation"; 
+import { useState, Suspense } from "react"; 
 
-export default function Login() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams(); 
+  const [loading, setLoading] = useState(false); 
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const handleGoogleLogin = async () => {
     try {
+      setLoading(true);
       await signIn.social({
         provider: "google",
         callbackURL: callbackUrl,
       });
     } catch (error) {
       console.error("Google login failed:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleEmailLogin = async (e) => {
     e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email");
+    const password = formData.get("password");
 
     try {
       await signIn.email({
         email,
         password,
         callbackURL: callbackUrl,
+      }, {
+        onSuccess: () => {
+           router.push(callbackUrl);
+           router.refresh();
+        },
+        onError: (ctx) => {
+           alert(ctx.error.message || "Login failed!");
+        }
       });
     } catch (error) {
       console.error("Login failed:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,6 +67,7 @@ export default function Login() {
               <span className="label-text text-lg font-bold text-[#403F3F]">Email address</span>
             </label>
             <input 
+              name="email" 
               type="email" 
               placeholder="Enter your email address" 
               className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none" 
@@ -62,6 +80,7 @@ export default function Login() {
               <span className="label-text text-lg font-bold text-[#403F3F]">Password</span>
             </label>
             <input 
+              name="password" 
               type="password" 
               placeholder="Enter your password" 
               className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none" 
@@ -73,8 +92,12 @@ export default function Login() {
           </div>
 
           <div className="pt-4">
-            <button type="submit" className="btn w-full h-14 text-white text-lg bg-[#403F3F] border-none rounded-md hover:bg-black">
-              Login
+            <button 
+              disabled={loading}
+              type="submit" 
+              className={`btn w-full h-14 text-white text-lg bg-[#403F3F] border-none rounded-md hover:bg-black ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              {loading ? "Logging in..." : "Login"}
             </button>
           </div>
         </form>
@@ -90,6 +113,7 @@ export default function Login() {
           <div className="divider text-gray-400">OR</div>
 
           <button
+            disabled={loading}
             type="button"
             onClick={handleGoogleLogin}
             className="btn btn-outline w-full max-w-[550px] mx-auto h-14 flex items-center justify-center gap-3 border-gray-300 hover:bg-gray-100 text-[#403F3F]"
@@ -104,5 +128,12 @@ export default function Login() {
         </div>
       </div>
     </div>
+  );
+}
+export default function Login() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }
