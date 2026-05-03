@@ -1,7 +1,6 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation"; 
-// ভুল সংশোধন: @/lib/auth এর বদলে @/lib/auth-client থেকে ইমপোর্ট করা হলো
 import { useSession } from "@/lib/auth-client"; 
 import products from "@/data/products.json";
 import ProductCard from "@/components/ProductCard";
@@ -9,12 +8,9 @@ import ProductCard from "@/components/ProductCard";
 export default function ProductsPage() {
   const router = useRouter();
   const pathname = usePathname(); 
-  
-  // সেশন চেক করার জন্য auth-client ব্যবহার হচ্ছে
   const { data: session, isPending } = useSession();
 
   useEffect(() => {
-    // সেশন না থাকলে এবং লোডিং শেষ হলে লগইন পেজে পাঠিয়ে দিবে
     if (!isPending && !session) {
       router.push(`/auth/login?callbackUrl=${pathname}`);
     }
