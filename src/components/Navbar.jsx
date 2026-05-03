@@ -27,7 +27,7 @@ export default function Navbar() {
         </Link>
       </div>
 
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar-center">
         <ul className="menu menu-horizontal px-1 gap-6 text-slate-700 font-semibold">
           <li><Link href="/" className="hover:text-blue-500 transition-colors">Home</Link></li>
           <li><Link href="/products" className="hover:text-blue-500 transition-colors">Products</Link></li>
