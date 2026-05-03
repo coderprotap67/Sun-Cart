@@ -16,22 +16,38 @@ export default function Navbar() {
       },
     });
   };
+  const navLinks = (
+    <>
+      <li><Link href="/" className="hover:text-blue-500 transition-colors">Home</Link></li>
+      <li><Link href="/products" className="hover:text-blue-500 transition-colors">Products</Link></li>
+      <li><Link href="/my-profile" className="hover:text-blue-500 transition-colors">My Profile</Link></li>
+    </>
+  );
 
   return (
-    <div className="navbar bg-white sticky top-0 z-50 px-10 py-4 shadow-md">
+    <div className="navbar bg-white sticky top-0 z-50 px-4 md:px-10 py-4 shadow-md">
       <div className="navbar-start">
-        <Link href="/" className="text-3xl font-extrabold tracking-tight">
+        {/* মোবাইল মেনু (Hamburger Icon) */}
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </div>
+          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white rounded-box w-52 text-slate-700 font-semibold border border-gray-100">
+            {navLinks}
+          </ul>
+        </div>
+        
+        <Link href="/" className="text-xl md:text-3xl font-extrabold tracking-tight">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-600">
-            Summer Essentials Store
+            Summer Essentials
           </span>
         </Link>
       </div>
-
-      <div className="navbar-center">
+      <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 gap-6 text-slate-700 font-semibold">
-          <li><Link href="/" className="hover:text-blue-500 transition-colors">Home</Link></li>
-          <li><Link href="/products" className="hover:text-blue-500 transition-colors">Products</Link></li>
-          <li><Link href="/my-profile" className="hover:text-blue-500 transition-colors">My Profile</Link></li>
+          {navLinks}
         </ul>
       </div>
 
@@ -54,19 +70,14 @@ export default function Navbar() {
               </ul>
             </div>
           ) : (
-            <>
-              <div className="w-10 h-10 rounded-full border-2 border-slate-200 flex items-center justify-center overflow-hidden bg-white shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-slate-600">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                </svg>
-              </div>
+            <div className="flex items-center gap-2">
               <Link 
                 href="/auth/login" 
-                className="btn btn-neutral rounded-lg px-8 bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 border-none text-white font-bold transition-all"
+                className="btn btn-sm md:btn-md bg-gradient-to-r from-blue-500 to-green-500 border-none text-white font-bold"
               >
                 Login
               </Link>
-            </>
+            </div>
           )}
         </div>
       </div>

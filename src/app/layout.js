@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { Inter } from 'next/font/google';
-// আইকন ব্যবহারের জন্য নিচের লাইনটি যোগ করা হয়েছে
 import { FaFacebook, FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 const inter = Inter({ subsets: ['latin'] });
