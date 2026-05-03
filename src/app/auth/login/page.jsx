@@ -1,5 +1,5 @@
 "use client";
-import { signIn } from "@/lib/auth";
+import { signIn } from "@/lib/auth-client"; 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation"; 
 
@@ -19,9 +19,20 @@ export default function Login() {
     }
   };
 
-  const handleEmailLogin = (e) => {
+  const handleEmailLogin = async (e) => {
     e.preventDefault();
-    router.push(callbackUrl);
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+
+    try {
+      await signIn.email({
+        email,
+        password,
+        callbackURL: callbackUrl,
+      });
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (
@@ -38,14 +49,24 @@ export default function Login() {
             <label className="label">
               <span className="label-text text-lg font-bold text-[#403F3F]">Email address</span>
             </label>
-            <input type="email" placeholder="Enter your email address" className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none" required />
+            <input 
+              type="email" 
+              placeholder="Enter your email address" 
+              className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none" 
+              required 
+            />
           </div>
 
           <div className="form-control w-full">
             <label className="label">
               <span className="label-text text-lg font-bold text-[#403F3F]">Password</span>
             </label>
-            <input type="password" placeholder="Enter your password" className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none" required />
+            <input 
+              type="password" 
+              placeholder="Enter your password" 
+              className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none" 
+              required 
+            />
             <label className="label">
               <a href="#" className="label-text-alt link link-hover text-[#706F6F]">Forgot password?</a>
             </label>

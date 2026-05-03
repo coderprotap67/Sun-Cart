@@ -1,10 +1,13 @@
 "use client";
-import { authClient } from "@/lib/auth"; 
+import { authClient } from "@/lib/auth-client"; 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Register() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
   const handleGoogleLogin = async () => {
     await authClient.signIn.social({
       provider: "google",
@@ -12,9 +15,35 @@ export default function Register() {
     });
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    router.push("/auth/login");
+    setLoading(true);
+
+    const name = e.target[0].value;
+    const email = e.target[1].value;
+    const image = e.target[2].value;
+    const password = e.target[3].value;
+
+    try {
+      await authClient.signUp.email({
+        email,
+        password,
+        name,
+        image,
+        callbackURL: "/",
+      }, {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: (ctx) => {
+          alert(ctx.error.message || "Registration failed");
+        }
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,8 +91,12 @@ export default function Register() {
           </div>
 
           <div className="pt-4">
-            <button type="submit" className="btn w-full h-14 text-white text-lg bg-[#403F3F] border-none rounded-md hover:bg-black transition-all">
-              Register
+            <button 
+              type="submit" 
+              disabled={loading}
+              className={`btn w-full h-14 text-white text-lg bg-[#403F3F] border-none rounded-md hover:bg-black transition-all ${loading ? 'loading' : ''}`}
+            >
+              {loading ? "Registering..." : "Register"}
             </button>
           </div>
         </form>

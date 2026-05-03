@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "@/lib/auth";
+import { useSession } from "@/lib/auth-client"; 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ import { useEffect } from "react";
 export default function MyProfile() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
+
   useEffect(() => {
     if (!isPending && !session) {
       router.push("/login");
