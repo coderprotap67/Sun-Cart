@@ -5,7 +5,7 @@ import clientPromise from "./mongodb";
 export const auth = betterAuth({
   database: mongodbAdapter(clientPromise),
 
-  baseURL: process.env.BETTER_AUTH_URL,
+baseURL: process.env.BETTER_AUTH_URL,
 
   emailAndPassword: {
     enabled: true,
