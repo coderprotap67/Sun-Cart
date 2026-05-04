@@ -1,11 +1,10 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb"; 
-import { db } from "./db"; 
+import client from "./mongodb"; 
 
 export const auth = betterAuth({
-    database: mongodbAdapter(db),
+    database: mongodbAdapter(client.db()),
     
-  
     baseURL: "https://sun-cart-enzr.vercel.app", 
     
     emailAndPassword: {  
