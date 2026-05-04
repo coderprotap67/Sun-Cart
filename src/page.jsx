@@ -1,7 +1,6 @@
 import Hero from "@/components/Hero";
 import ProductCard from "@/components/ProductCard";
 import products from "@/data/products.json";
-
 export default function Home() {
   const popularProducts = products.slice(0, 3);
 
@@ -41,7 +40,7 @@ export default function Home() {
           </div>
           <div className="hidden md:block">
              <div className="bg-white p-6 rounded-2xl shadow-inner border-2 border-dashed border-yellow-200 text-center">
-                <p className="italic text-gray-400">"Your health is your greatest wealth this summer!"</p>
+                <p className="italic text-gray-400">&quot;Your health is your greatest wealth this summer!&quot;</p>
              </div>
           </div>
         </div>
