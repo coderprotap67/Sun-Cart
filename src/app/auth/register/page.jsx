@@ -1,5 +1,6 @@
 "use client";
-import { authClient } from "@/lib/auth-client"; 
+
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,28 +20,36 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
 
-    const name = e.target[0].value;
-    const email = e.target[1].value;
-    const image = e.target[2].value;
-    const password = e.target[3].value;
+    const form = new FormData(e.currentTarget);
+
+    const name = form.get("name");
+    const email = form.get("email");
+    const image = form.get("image");
+    const password = form.get("password");
 
     try {
-      await authClient.signUp.email({
-        email,
-        password,
-        name,
-        image,
-        callbackURL: "/",
-      }, {
-        onSuccess: () => {
-          router.push("/");
+      await authClient.signUp.email(
+        {
+          name,
+          email,
+          password,
+          image: image || "",
+          callbackURL: "/",
         },
-        onError: (ctx) => {
-          alert(ctx.error.message || "Registration failed");
+        {
+          onSuccess: () => {
+            console.log("Registration successful");
+            router.push("/");
+          },
+          onError: (ctx) => {
+            console.error("Signup Error:", ctx.error);
+            alert(ctx.error.message || "Registration failed");
+          },
         }
-      });
+      );
     } catch (error) {
       console.error("Registration error:", error);
+      alert("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -52,62 +61,117 @@ export default function Register() {
         <h2 className="text-4xl font-bold text-center text-[#403F3F] mb-12">
           Register your account
         </h2>
-        
+
         <hr className="mb-12 border-gray-200" />
-        <form onSubmit={handleRegister} className="max-w-[550px] mx-auto space-y-6">
+
+        <form
+          onSubmit={handleRegister}
+          className="max-w-[550px] mx-auto space-y-6"
+        >
+          {/* Name */}
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text text-lg font-bold text-[#403F3F]">Your Name</span>
+              <span className="label-text text-lg font-bold text-[#403F3F]">
+                Your Name
+              </span>
             </label>
-            <input type="text" placeholder="Enter your name" className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none" required />
+            <input
+              name="name"
+              type="text"
+              placeholder="Enter your name"
+              className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none"
+              required
+            />
           </div>
 
+          {/* Email */}
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text text-lg font-bold text-[#403F3F]">Email address</span>
+              <span className="label-text text-lg font-bold text-[#403F3F]">
+                Email address
+              </span>
             </label>
-            <input type="email" placeholder="Enter your email address" className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none" required />
+            <input
+              name="email"
+              type="email"
+              placeholder="Enter your email address"
+              className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none"
+              required
+            />
           </div>
 
+          {/* Photo URL */}
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text text-lg font-bold text-[#403F3F]">Photo URL</span>
+              <span className="label-text text-lg font-bold text-[#403F3F]">
+                Photo URL
+              </span>
             </label>
-            <input type="text" placeholder="Enter your photo URL" className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none" required />
+            <input
+              name="image"
+              type="text"
+              placeholder="Enter your photo URL (optional)"
+              className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none"
+            />
           </div>
 
+          {/* Password */}
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text text-lg font-bold text-[#403F3F]">Password</span>
+              <span className="label-text text-lg font-bold text-[#403F3F]">
+                Password
+              </span>
             </label>
-            <input type="password" placeholder="Enter your password" className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none" required />
+            <input
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              className="input bg-[#F3F3F3] border-none rounded-md h-14 w-full focus:outline-none"
+              required
+            />
           </div>
 
+          {/* Terms */}
           <div className="flex items-center gap-3 py-2">
-            <input type="checkbox" required className="checkbox checkbox-sm rounded-none border-[#403F3F]" />
+            <input
+              type="checkbox"
+              required
+              className="checkbox checkbox-sm rounded-none border-[#403F3F]"
+            />
             <span className="text-base text-[#706F6F] font-medium">
-              Accept <span className="font-bold text-[#403F3F]">Term & Conditions</span>
+              Accept{" "}
+              <span className="font-bold text-[#403F3F]">
+                Terms & Conditions
+              </span>
             </span>
           </div>
 
+          {/* Register Button */}
           <div className="pt-4">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={loading}
-              className={`btn w-full h-14 text-white text-lg bg-[#403F3F] border-none rounded-md hover:bg-black transition-all ${loading ? 'loading' : ''}`}
+              className={`btn w-full h-14 text-white text-lg bg-[#403F3F] border-none rounded-md hover:bg-black transition-all ${
+                loading ? "loading" : ""
+              }`}
             >
               {loading ? "Registering..." : "Register"}
             </button>
           </div>
         </form>
 
+        {/* Login + Google */}
         <div className="mt-8 text-center space-y-6">
           <p className="text-[#706F6F] font-semibold text-lg">
-            Already Have An Account ?{" "}
-             <Link href="/auth/login" className="text-[#F75B5F] hover:underline">
-               Login
-             </Link>
+            Already Have An Account?{" "}
+            <Link
+              href="/auth/login"
+              className="text-[#F75B5F] hover:underline"
+            >
+              Login
+            </Link>
           </p>
+
           <div className="divider text-gray-400">OR</div>
 
           <button
