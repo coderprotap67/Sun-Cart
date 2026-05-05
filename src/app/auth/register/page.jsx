@@ -19,7 +19,7 @@ export default function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    console.log(e);
     const form = new FormData(e.currentTarget);
 
     const name = form.get("name");
