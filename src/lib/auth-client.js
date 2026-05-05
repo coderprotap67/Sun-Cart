@@ -1,7 +1,7 @@
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
-    baseURL: "https://sun-cart-enzr.vercel.app" 
+    baseURL: "https://sun-cart-psi.vercel.app",
 });
 
 
