@@ -3,9 +3,11 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import clientPromise from "./mongodb";
 
 export const auth = betterAuth({
-  database: mongodbAdapter(clientPromise),
+  database: mongodbAdapter(clientPromise, {
+    dbName: "SunCartDB",
+  }),
 
-baseURL: process.env.BETTER_AUTH_URL,
+  baseURL: process.env.BETTER_AUTH_URL,
 
   emailAndPassword: {
     enabled: true,
