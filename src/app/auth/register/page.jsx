@@ -25,6 +25,8 @@ export default function Register() {
     const email = form.get("email");
     const image = form.get("image");
     const password = form.get("password");
+    console.log("name:",name , "email:",email,image , "password",password);
+    console.log("form data : ",e.currentTarget);
 
     try {
       await authClient.signUp.email(
